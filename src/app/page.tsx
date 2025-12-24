@@ -5,7 +5,7 @@ import { Sparkles, Droplet, Dumbbell, Leaf, Calendar, ChevronRight, Check, X } f
 
 // Types
 type Goal = 'desinchar' | 'afinar' | 'contorno'
-type Screen = 'onboarding' | 'name-input' | 'goal' | 'home' | 'ice-sculpt' | 'face-form' | 'recipes' | 'routine'
+type Screen = 'onboarding' | 'goal' | 'home' | 'ice-sculpt' | 'face-form' | 'recipes' | 'routine'
 
 interface UserData {
   name: string
@@ -64,7 +64,7 @@ export default function EleganceFitFace() {
   // Onboarding content
   const onboardingContent = [
     {
-      title: 'Bem-vinda ao Elegance Fit Face - PRO',
+      title: 'Bem-vinda ao Elegance',
       subtitle: 'Beleza natural através da constância',
       description: 'A verdadeira elegância não está em promessas milagrosas, mas na disciplina suave e no respeito à fisiologia do seu rosto.',
       icon: Sparkles
@@ -227,7 +227,7 @@ export default function EleganceFitFace() {
   }
 
   // Onboarding Screen
-  if (screen === 'onboarding') {
+  if (screen === 'onboarding' && onboardingStep < onboardingContent.length) {
     const content = onboardingContent[onboardingStep]
     const Icon = content.icon
 
@@ -238,9 +238,7 @@ export default function EleganceFitFace() {
             <Icon className="w-10 h-10 text-white" />
           </div>
           
-          <h1 className="text-3xl font-light text-gray-800 mb-3 text-center">
-            {content.title}
-          </h1>
+          <h1 className="text-3xl font-light text-gray-800 mb-3 text-center">{content.title}</h1>
           <p className="text-sm font-medium text-rose-500 mb-6 text-center">{content.subtitle}</p>
           <p className="text-base text-gray-600 text-center max-w-md leading-relaxed">{content.description}</p>
         </div>
@@ -260,7 +258,9 @@ export default function EleganceFitFace() {
           <button
             onClick={() => {
               if (onboardingStep === onboardingContent.length - 1) {
-                setScreen('name-input')
+                setOnboardingStep(0)
+                setScreen('onboarding')
+                // Show name input
               } else {
                 setOnboardingStep(onboardingStep + 1)
               }
@@ -275,7 +275,7 @@ export default function EleganceFitFace() {
   }
 
   // Name Input Screen
-  if (screen === 'name-input') {
+  if (screen === 'onboarding' && onboardingStep === 0 && !userData.name) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-rose-50 via-white to-purple-50 flex flex-col items-center justify-center px-6">
         <div className="w-full max-w-md">
